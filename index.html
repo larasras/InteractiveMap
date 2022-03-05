@@ -6,22 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-    <title>Document</title>
+    <title>OSM | Leaflet</title>
 </head>
-
-<style>
-    #mapid { height: 280px; }
-</style>
-
 <body> 
-    <div id="mapid"></div>
+    <div id="map" style = "width:900px; height:580px;"></div>
 </body>
 <script>
-    var mymap = L.map('mapid').setView([51.505, -0.09], 13)
+    // Creating map options
+    var mapOptions = {
+        center: [-6.9024, 107.6422],
+        zoom: 10
+    }
+    
+    // Creating a map object
+    var map = new L.map('map', mapOptions);
+    
+    // Creating a Layer object
+    var layer = new L.TileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png');
+    map.addLayer(layer);// Adding layer to the map
 
-    // add the OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    { subdomains: ['a', 'b', 'c'] })
-    .addTo(mymap)
+    // Attribution options
+    var attrOptions = {
+        prefix: 'OSM | Leaflet'
+    };
+    
+    // Creating an attribution
+    var attr = L.control.attribution(attrOptions);
+    attr.addTo(map);  // Adding attribution to the map
+
+    // Creating markers
+    var hydMarker = new L.Marker([-6.9024, 107.6422]);
+    var vskpMarker = new L.Marker([-6.9330, 107.5805]);
+    var vjwdMarker = new L.Marker([-6.95416, 107.65765]);
+
+    // Creating latlng object
+    var latlngs = [
+        [-6.94068, 107.58756],
+        [-6.9024, 107.6422],
+        [-6.95416, 107.65765]
+    ];
+    var polygon = L.polygon(latlngs, {color: 'red'}); // Creating a polygon
+
+    // Creating feature group
+    var featureGroup = L.featureGroup([hydMarker, vskpMarker, vjwdMarker, polygon]);
+    featureGroup.setStyle({color:'blue',opacity:.5});
+    featureGroup.bindPopup("This is marker");
+    featureGroup.addTo(map);// Adding layer group to map
 </script>
 </html>
