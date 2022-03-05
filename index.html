@@ -25,15 +25,6 @@
     var layer = new L.TileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png');
     map.addLayer(layer);// Adding layer to the map
 
-    // Attribution options
-    var attrOptions = {
-        prefix: 'OSM | Leaflet'
-    };
-    
-    // Creating an attribution
-    var attr = L.control.attribution(attrOptions);
-    attr.addTo(map);  // Adding attribution to the map
-
     // Creating markers
     var hydMarker = new L.Marker([-6.9024, 107.6422]);
     var vskpMarker = new L.Marker([-6.9330, 107.5805]);
